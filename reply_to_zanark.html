@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f4f1e9">
+	<title>Reply to confesssion 1132</title>
+	<style>
+		:root {
+			color-scheme: light;
+			--paper: #f4f1e9;
+			--ink: #202823;
+			--muted: #6d746c;
+			--line: #d7d9cf;
+			--green: #315b49;
+			--green-dark: #244637;
+			--coral: #bd5d48;
+		}
+
+		* { box-sizing: border-box; }
+
+		.petal-field {
+			position: fixed;
+			z-index: 1;
+			inset: 0;
+			overflow: hidden;
+			pointer-events: none;
+		}
+
+		.falling-petal {
+			position: absolute;
+			top: -70px;
+			left: var(--petal-left);
+			width: var(--petal-size, 42px);
+			height: calc(var(--petal-size, 42px) * 1.35);
+			border: 1.5px solid #a96d82;
+			clip-path: polygon(50% 0, 66% 13%, 82% 28%, 95% 47%, 100% 63%, 90% 79%, 75% 92%, 57% 100%, 39% 96%, 21% 87%, 7% 73%, 0 56%, 12% 36%, 29% 17%);
+			background:
+				repeating-linear-gradient(128deg, transparent 0 4px, #cf78934f 4px 5px),
+				linear-gradient(145deg, #fff4f7 4%, #f4c4d2 58%, #eaaabd 100%);
+			box-shadow: inset 1px 1px 0 #fffafc, 1px 1px 0 #a96d8259;
+			opacity: .68;
+			animation: petal-fall var(--fall-duration) linear var(--fall-delay) infinite;
+		}
+
+		.falling-petal::before {
+			position: absolute;
+			inset: 3px 2px 2px 3px;
+			border: 1px solid #a96d8266;
+			border-radius: inherit;
+			content: "";
+			transform: rotate(4deg);
+		}
+
+		.falling-petal::after {
+			position: absolute;
+			top: 13%;
+			left: 49%;
+			width: 1px;
+			height: 72%;
+			background: #a96d8278;
+			content: "";
+			transform: rotate(20deg);
+			transform-origin: center;
+		}
+
+		.falling-petal:nth-child(1) { --petal-left: 3%; --fall-duration: 19s; --fall-delay: -13s; --petal-size: 34px; }
+		.falling-petal:nth-child(2) { --petal-left: 9%; --fall-duration: 24s; --fall-delay: -4s; --petal-size: 44px; }
+		.falling-petal:nth-child(3) { --petal-left: 16%; --fall-duration: 21s; --fall-delay: -9s; --petal-size: 37px; }
+		.falling-petal:nth-child(4) { --petal-left: 22%; --fall-duration: 26s; --fall-delay: -17s; --petal-size: 48px; }
+		.falling-petal:nth-child(5) { --petal-left: 29%; --fall-duration: 20s; --fall-delay: -2s; --petal-size: 35px; }
+		.falling-petal:nth-child(6) { --petal-left: 35%; --fall-duration: 25s; --fall-delay: -11s; --petal-size: 42px; }
+		.falling-petal:nth-child(7) { --petal-left: 42%; --fall-duration: 22s; --fall-delay: -6s; --petal-size: 39px; }
+		.falling-petal:nth-child(8) { --petal-left: 48%; --fall-duration: 27s; --fall-delay: -19s; --petal-size: 47px; }
+		.falling-petal:nth-child(9) { --petal-left: 55%; --fall-duration: 19s; --fall-delay: -15s; --petal-size: 34px; }
+		.falling-petal:nth-child(10) { --petal-left: 61%; --fall-duration: 24s; --fall-delay: -7s; --petal-size: 44px; }
+		.falling-petal:nth-child(11) { --petal-left: 68%; --fall-duration: 21s; --fall-delay: -3s; --petal-size: 37px; }
+		.falling-petal:nth-child(12) { --petal-left: 74%; --fall-duration: 26s; --fall-delay: -21s; --petal-size: 48px; }
+		.falling-petal:nth-child(13) { --petal-left: 81%; --fall-duration: 20s; --fall-delay: -10s; --petal-size: 35px; }
+		.falling-petal:nth-child(14) { --petal-left: 87%; --fall-duration: 25s; --fall-delay: -16s; --petal-size: 42px; }
+		.falling-petal:nth-child(15) { --petal-left: 94%; --fall-duration: 22s; --fall-delay: -5s; --petal-size: 39px; }
+		.falling-petal:nth-child(16) { --petal-left: 12%; --fall-duration: 27s; --fall-delay: -23s; --petal-size: 47px; }
+		.falling-petal:nth-child(17) { --petal-left: 50%; --fall-duration: 23s; --fall-delay: -12s; --petal-size: 41px; }
+		.falling-petal:nth-child(18) { --petal-left: 90%; --fall-duration: 28s; --fall-delay: -18s; --petal-size: 45px; }
+
+		@keyframes petal-fall {
+			0% { transform: translate3d(0, -8vh, 0) rotate(0deg); }
+			50% { transform: translate3d(24px, 52vh, 0) rotate(210deg); }
+			100% { transform: translate3d(-18px, 112vh, 0) rotate(420deg); }
+		}
+
+		.page {
+			position: relative;
+			z-index: 2;
+		}
+
+		.visually-hidden {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			white-space: nowrap;
+			border: 0;
+		}
+
+		body {
+			min-height: 100vh;
+			margin: 0;
+			background-color: var(--paper);
+			background-image: radial-gradient(#69746620 .7px, transparent .7px);
+			background-size: 9px 9px;
+			color: var(--ink);
+			font-family: Georgia, "Times New Roman", serif;
+		}
+
+		body.is-unlocked {
+			background-image: url("./open_sesame_img.png");
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-attachment: fixed;
+		}
+
+		.page {
+			min-height: 100vh;
+			display: grid;
+			grid-template-rows: auto 1fr auto;
+			padding: 28px clamp(20px, 5vw, 72px) 20px;
+		}
+
+		header, footer {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 16px;
+			font-family: "Trebuchet MS", sans-serif;
+			font-size: 12px;
+			letter-spacing: .08em;
+			text-transform: uppercase;
+		}
+
+		.brand { font-weight: 700; }
+		.status { color: var(--muted); }
+		.status::before {
+			content: "";
+			display: inline-block;
+			width: 7px;
+			height: 7px;
+			margin: 0 9px 1px 0;
+			border-radius: 50%;
+			background: var(--coral);
+		}
+
+		.status.is-unlocked::before { background: var(--green); }
+
+		main {
+			display: grid;
+			place-items: center;
+			padding: 60px 0;
+		}
+
+		.gate {
+			width: min(100%, 470px);
+			animation: arrive .55s ease-out both;
+		}
+
+		.seal {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			width: 54px;
+			height: 54px;
+			margin-bottom: 32px;
+			border: 1px solid #315b4955;
+			border-radius: 50%;
+			color: var(--green);
+		}
+
+		.eyebrow {
+			margin: 0 0 13px;
+			color: var(--coral);
+			font: 700 11px/1.4 "Trebuchet MS", sans-serif;
+			letter-spacing: .17em;
+			text-transform: uppercase;
+		}
+
+		h1 {
+			max-width: 440px;
+			margin: 0;
+			font-size: clamp(42px, 8vw, 66px);
+			font-weight: 400;
+			line-height: .99;
+		}
+
+		.intro {
+			margin: 22px 0 30px;
+			color: #596159;
+			font-size: 17px;
+			line-height: 1.6;
+		}
+
+		form { display: grid; gap: 10px; }
+
+		label {
+			font: 700 11px/1.4 "Trebuchet MS", sans-serif;
+			letter-spacing: .1em;
+			text-transform: uppercase;
+		}
+
+		.input-row {
+			display: flex;
+			min-height: 56px;
+			border: 1px solid #aeb6aa;
+			background: #fffdf8;
+			transition: border-color .18s ease, box-shadow .18s ease;
+		}
+
+		.input-row:focus-within {
+			border-color: var(--green);
+			box-shadow: 0 0 0 3px #315b491c;
+		}
+
+		input {
+			width: 100%;
+			min-width: 0;
+			padding: 0 16px;
+			border: 0;
+			outline: 0;
+			background: transparent;
+			color: var(--ink);
+			font: 16px "Trebuchet MS", sans-serif;
+		}
+
+		input::placeholder { color: #92988e; }
+
+		button {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 11px;
+			min-width: 134px;
+			padding: 0 19px;
+			border: 0;
+			background: var(--green);
+			color: white;
+			cursor: pointer;
+			font: 700 12px "Trebuchet MS", sans-serif;
+			letter-spacing: .06em;
+			text-transform: uppercase;
+			transition: background .18s ease;
+		}
+
+		button:hover { background: var(--green-dark); }
+		button:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+		button svg { width: 15px; height: 15px; }
+
+		.message {
+			min-height: 22px;
+			margin: 8px 0 0;
+			color: #a13d32;
+			font: 13px/1.5 "Trebuchet MS", sans-serif;
+		}
+
+		.private-content { display: none; }
+		.private-content.is-visible { display: block; }
+		.gate.is-hidden { display: none; }
+
+		.welcome-mark {
+			margin: 0 0 18px;
+			color: var(--green);
+			font: 700 11px "Trebuchet MS", sans-serif;
+			letter-spacing: .16em;
+			text-transform: uppercase;
+		}
+
+		.private-content h2 {
+			margin: 0;
+			font-size: clamp(40px, 7vw, 60px);
+			font-weight: 400;
+			line-height: 1.03;
+		}
+
+		.private-content p {
+			max-width: 510px;
+			color: #596159;
+			font-size: 18px;
+			line-height: 1.7;
+		}
+
+		.thought-trigger {
+			position: fixed;
+			z-index: 4;
+			top: 40%;
+			left: 25%;
+			width: clamp(150px, 18vw, 240px);
+			height: clamp(160px, 25vh, 260px);
+			padding: 0;
+			transform: translate(-50%, -50%);
+			border: 2px solid transparent;
+			border-radius: 50%;
+			background: transparent;
+			color: transparent;
+			cursor: help;
+		}
+
+		.thought-trigger:hover { background: transparent; }
+		.thought-trigger:focus-visible { border-color: var(--coral); }
+
+		.thought-hotspot-girl .thought-trigger { left: 75%; }
+
+		.thought-bubble {
+			position: fixed;
+			z-index: 5;
+			top: 4vh;
+			left: 25%;
+			width: min(560px, calc(100vw - 28px));
+			max-height: 72vh;
+			padding: 24px 28px;
+			transform: translate(-50%, 8px);
+			overflow-y: auto;
+			border: 1px solid #315b4966;
+			border-radius: 30px;
+			background: #fffdf8b8;
+			box-shadow: 0 12px 40px #20282340;
+			color: var(--ink);
+			opacity: 0;
+			pointer-events: none;
+			visibility: hidden;
+			transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+		}
+
+		.thought-hotspot-girl .thought-bubble {
+			right: 14px;
+			left: auto;
+			transform: translateY(8px);
+		}
+
+		.thought-hotspot.is-hovered .thought-bubble,
+		.thought-hotspot.is-open .thought-bubble {
+			transform: translate(-50%, 0);
+			opacity: 1;
+			pointer-events: auto;
+			visibility: visible;
+		}
+
+		.thought-hotspot-girl.is-hovered .thought-bubble,
+		.thought-hotspot-girl.is-open .thought-bubble {
+			transform: translateY(0);
+		}
+
+		.thought-bubble::after {
+			position: sticky;
+			bottom: -24px;
+			display: block;
+			width: 18px;
+			height: 18px;
+			margin: 8px 0 0 28%;
+			border: 1px solid #315b4966;
+			border-radius: 50%;
+			background: #fffdf8;
+			box-shadow: 12px 14px 0 -5px #fffdf8, 12px 14px 0 -4px #315b4966;
+			content: "";
+		}
+
+		.thought-bubble h3 {
+			margin: 0;
+			font: 700 11px/1.4 "Trebuchet MS", sans-serif;
+			letter-spacing: .13em;
+			text-transform: uppercase;
+		}
+
+		.thought-bubble-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			margin-bottom: 14px;
+		}
+
+		.thought-close {
+			min-width: 0;
+			min-height: 30px;
+			padding: 4px 9px;
+			border: 1px solid #315b4966;
+			background: transparent;
+			color: var(--green);
+			font-size: 10px;
+		}
+
+		.thought-close:hover { background: var(--green); color: white; }
+
+		.thought-bubble p {
+			max-width: none;
+			margin: 0 0 12px;
+			color: #39433c;
+			font: 15px/1.6 Georgia, "Times New Roman", serif;
+		}
+
+		.thought-bubble p:last-of-type { margin-bottom: 0; }
+
+		.logout {
+			position: fixed;
+			z-index: 6;
+			top: 60%;
+			left: 50%;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 68px;
+			min-width: 68px;
+			min-height: 68px;
+			margin: 0;
+			padding: 4px;
+			transform: translateX(-50%);
+			border: 0;
+			border-radius: 50%;
+			background: transparent;
+			cursor: pointer;
+		}
+
+		.logout:hover { background: #fff4f780; }
+		.logout img { display: block; width: 60px; height: 60px; object-fit: contain; opacity: .6; }
+		.logout:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+
+		footer {
+			color: var(--muted);
+			font-size: 10px;
+		}
+
+		.music-player {
+			position: fixed;
+			z-index: 9;
+			left: 50%;
+			bottom: 18px;
+			display: none;
+			align-items: center;
+			gap: 8px;
+			padding: 0;
+			transform: translateX(-50%);
+			transition: opacity .18s ease;
+		}
+
+		body.is-unlocked #bgm-player,
+		body:not(.is-unlocked) #lock-music-player {
+			display: flex;
+		}
+
+		@media (hover: hover) and (pointer: fine) {
+			.music-player {
+				opacity: 0;
+			}
+		}
+
+		.music-toggle {
+			width: 52px;
+			min-width: 52px;
+			height: 52px;
+			padding: 0;
+			border: 0;
+			border-radius: 50%;
+			background: transparent;
+			color: #cf6f91;
+		}
+
+		.music-toggle:hover { background: transparent; color: #a94f70; }
+		.music-toggle svg { width: 18px; height: 18px; }
+		.music-toggle .pause-icon { display: none; }
+		.music-toggle[aria-pressed="true"] .play-icon { display: none; }
+		.music-toggle[aria-pressed="true"] .pause-icon { display: block; }
+
+		.music-volume {
+			width: clamp(110px, 24vw, 190px);
+			min-width: 110px;
+			height: 26px;
+			min-height: 0;
+			padding: 0;
+			border: 0;
+			background: transparent;
+			box-shadow: none;
+			accent-color: #cf6f91;
+			cursor: pointer;
+		}
+
+		.music-volume:focus { border: 0; box-shadow: none; }
+
+		.music-status {
+			position: absolute;
+			right: 14px;
+			bottom: calc(100% + 7px);
+			padding: 4px 8px;
+			color: #8f4961;
+			font: 11px "Trebuchet MS", sans-serif;
+			white-space: nowrap;
+		}
+
+		@media (max-width: 520px) {
+			.music-player {
+				bottom: 10px;
+				gap: 6px;
+			}
+
+			.music-toggle {
+				width: 44px;
+				min-width: 44px;
+				height: 44px;
+			}
+
+			.music-volume {
+				width: min(38vw, 150px);
+				min-width: 90px;
+			}
+		}
+
+		@keyframes arrive {
+			from { opacity: 0; transform: translateY(12px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		@media (max-width: 520px) {
+			.page { padding-top: 21px; }
+			main { padding: 54px 0; }
+			.seal { margin-bottom: 26px; }
+			.input-row { flex-direction: column; border: 0; gap: 9px; background: transparent; }
+			.input-row:focus-within { border-color: transparent; box-shadow: none; }
+			input { min-height: 54px; border: 1px solid #aeb6aa; background: #fffdf8; }
+			input:focus { border-color: var(--green); box-shadow: 0 0 0 3px #315b491c; }
+			button { min-height: 52px; }
+			.thought-bubble { top: 3vh; max-height: 78vh; padding: 20px; }
+			footer span:last-child { text-align: right; }
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			*, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+			.petal-field { display: none; }
+		}
+	</style>
+</head>
+<body>
+	<div class="petal-field" aria-hidden="true">
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+		<span class="falling-petal"></span>
+	</div>
+	<div class="page">
+		<header>
+			<span class="brand"></span>
+			<span class="status" id="page-status">Restricted to just OP</span>
+		</header>
+
+		<main>
+			<section class="gate" id="password-gate" aria-labelledby="page-title">
+				<p class="eyebrow">Knock Knock</p>
+				<h1 id="page-title">To the OP!</h1>
+				<form id="password-form">
+					<label for="password">.. / ... . . / -.-- --- ..-</label>
+					<div class="input-row">
+						<input id="password" name="password" type="password" placeholder="Enter the magic word" autocomplete="current-password" required aria-describedby="message">
+						<button type="submit">
+							<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10h12m-5-5 5 5-5 5" /></svg>
+						</button>
+					</div>
+					<p class="message" id="message" role="status" aria-live="polite"></p>
+				</form>
+			</section>
+
+			<section class="private-content" id="private-content" aria-labelledby="welcome-title" tabindex="-1">
+				<button class="logout" id="lock-page" type="button" aria-label="Lock page" title="Lock page">
+					<img src="./lock.png" alt="">
+				</button>
+				<div class="thought-hotspot" id="thought-hotspot">
+					<button class="thought-trigger" id="thought-trigger" type="button" aria-label="Read the confession" aria-controls="thought-bubble" aria-expanded="false" title="Hover to read the confession">Read confession</button>
+					<aside class="thought-bubble" id="thought-bubble" aria-labelledby="thought-title">
+						<div class="thought-bubble-header">
+							<h3 id="thought-title">Honest Confession here....</h3>
+							<button class="thought-close" id="thought-close" type="button">Close</button>
+						</div>
+						<p>So I like this girl on the server, and I wont explain what I like about her but letting you know that I am always looking forward to see a reaction from her on all my messages, does she find it funny? does she think I'm cool? does she think I'm the guy 'who gets it'.</p>
+						<p>I know this is a case of virtual infatuation so I tried to calm myself down and took some time to reflect on this behavior, wont call it an obsession but yeah 50% of the reason why I do tend to come online is hoping she's online, hoping maybe she's on VC.</p>
+						<p>My results from the self-reflection: Now lately I have been talking to a lot of people on the sever and I've realized that people on this server are DAMN AMAZING! They have their shit figured out, thy are earning lots and lots of money, some are abroad doing their masters, and some have done BTech from AMAZING institutes which are honest achievements, some are working on AMAZING projects and holy damn some have crazy hot physique(talking about men here, I don't have the permission to call a women hot unless she is my significant other, else I know it sounds creepy to hear it form a stranger....talking about women here as well cuz I don't know about her sexuality yet and i don't want to assume anything as that would be disrespectful but she is a Female as per her profile)</p>
+						<p>So with this, if the server has so many amazing people to choose from--- and I don't know if they are courting her as well or not, but seriously they are so amazing that I would never stand a chance lol if I were to compete with them --- why would she ever even think of me lol.</p>
+						<p>She is so GOD DAMN BEAUTIFUL and she deserves the best freaking person that can have the best possible future with her. I mean even if not long term she still deserves to have the best person she can proudly call her partner.</p>
+						<p>And I feel like my infatuation might be quite shallow as well cuz all I know about her is from Discord, and I wish I had the courage to know more about her. And I understand that I am a coward, its cowardly to give up cuz there are better people out there, but I don't want to loose a friend in the pursuit of love, cuz maybe she would still wanna be friends, but I will always end up wanting to be something more than that.</p>
+						<p>So I want to now let go, let go of this obsession, let go of this anonymous love for towards her. I wish the universe would converge our fates once again someday in the future, and then maybe I'll have accomplished enough in my life to at least have the courage to approach her.</p>
+						<p>this was a great session of rant + vent lol. i hope she reads this, and I know I will be waiting to see a reaction or a reply from her here.</p>
+						<p>didnt use ChatGPT so plz ignore any mistakes.</p>
+					</aside>
+				</div>
+				<div class="thought-hotspot thought-hotspot-girl" id="reply-hotspot">
+					<button class="thought-trigger" id="reply-trigger" type="button" aria-label="Read her reply" aria-controls="reply-bubble" aria-expanded="false" title="Hover to read her reply">Read her reply</button>
+					<aside class="thought-bubble" id="reply-bubble" aria-labelledby="reply-title">
+						<div class="thought-bubble-header">
+							<h3 id="reply-title">My could have been reply to the confession......!!</h3>
+							<button class="thought-close" id="reply-close" type="button">Close</button>
+						</div>
+						<p>First of All, I did not have a single idea that you were thinking of me as a CRUSH! OH MY GOODNESS!!!</p>
+						<p>I have been noticing you from our first call. Your airy voice definitely caught me off guard the first time I heard your voice! I don't know which part of my brain made me believe that staring at your dp far too long will somehow make you sound more clearer/louder to me (Brain was not Braining, as usual!). I don't remember much of the conversation from back then, except for your username "Zanark", crystal clearly.</p>
+						<p>I got active on the server, and later on, the first time I saw your username in the thirties channel, I got super excited and texted "Heyyy my buddyyy!", only to get shot down by you saying you did not remember much about me or our call back then. Did I expect too much? Sad already T.T</p>
+						<p>Days later we hung out many times in the vc with others and "the cardboard sticky on face" stream from the VC back then really made me nostalgic about my first year project. The immediate thought in my head was "He is a COOL guy! Holy Fuck!!" For some reason, I wanted to be your unpaid promotional manager for your work XD</p>
+						<p>With more moments, I got to know how much of a kind and authentic person you are, who is maintaining himself in lowkey while easily being the coolest tech geek of the server. You will always have my respect and admiration for that! I was looking forward to hear more of you in VCs and one day the DMs started. BIG YAYYY Moment! Woohoo!! Then you showed me your cool game project and asked me to give voice over and boy oh boy! I was lowkey lost in the clouds thinking, "Wow! So I do have a decent robotic voice or sth!?".</p>
+						<p>Jokes on me,lol XD</p>
+						<p>I am legit shy when it comes to showcasing my creativity or exploring anything but that night, I did the recordings for you for god knows what reason (If I say I was not seeking validation from you back then, know that I am lying through my teeth). I wanted to collaboarate more with you and hence the spam of my music creations!</p>
+						<p>I was pretty excited the other day in vc when it was just 2 of us and AttackTitan joined us -&gt; Both of us were looking at his back! ADMIT IT! But I genuinely felt like as if my time with you has been disturbed by someone else. Ngl!</p>
+						<p>Moving ahead, I was in call while I read the confession. Of course, I figured it was you within minutes of your post. I wanted to give this reply from back then. I have pasted that reply as a hidden message. Hope you can find it ;)</p>
+						<p>I have got to know more about you the more we spoke with each other and genuinely felt protective over your heart. I must admit, I was craving for a simple, honest, earnest feeling and you showed me that. You showed how it is like to be both responsible, caring with innocent heart throughout. A single thought kept echoing in my head throughout the next day, all the time - "Why did he not come to me few years before? Even a single year would have been fine! Why now? Why show me a fully bloomed bright pink, fresh and innocent cherry blossom tree when I've resigned myself for icy hilltop as my abode?"</p>
+						<p>I did not know back then but I know now, what it is like to feel a simple honest feeling of liking a person without any thoughts of past nor future clouding the feeling. Now when I think of you, my heart becomes like that of a 6 yr old kid who just wanna run along with you wherever the feet takes!</p>
+						<p>I am sure I am gonna sound extremely corny but know that, You are my precious! I may not be your gollum but I feel like I am your Bilbo Baggins at some level (I don't wish to overstep my boundaries to the level of obsession .... ahahhaah). I am sure that I do not know the entirity of you but I have come to hold Debby as someone very dear to me. Let life complicate all the scenes, events and the 'could have beens'. Just remember that you are admired and cared by me, Always! Thank you for letting me get to know you albeit teeny tiny little bit of you.</p>
+						<p>A wonderful and amazing partner is waiting for you somewhere out there! I am sure she will be able to make you feel like you are a 6 yr old ! Meanwhile, please be kind to yourself and face the future with a happy smile! </p>
+						<p>P.S: Your smile looks really good on you aaannnnddddd....thanks for smiling ;)</p>
+					</aside>
+				</div>
+			</section>
+		</main>
+
+	</div>
+	<div class="music-player" id="bgm-player" role="group" aria-label="Unlocked page background music controls">
+		<button class="music-toggle" id="music-toggle" type="button" aria-label="Play background music" aria-pressed="false" title="Play background music">
+			<svg class="play-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M6 3.5v13l10-6.5z" /></svg>
+			<svg class="pause-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 4h3.5v12H5zm6.5 0H15v12h-3.5z" /></svg>
+		</button>
+		<label class="visually-hidden" for="music-volume">Unlocked page music volume</label>
+		<input class="music-volume" id="music-volume" type="range" min="0" max="100" value="30" aria-label="Unlocked page music volume">
+	</div>
+	<audio id="custom-music" src="./bgm_playable.m4a" preload="auto" loop></audio>
+	<div class="music-player" id="lock-music-player" role="group" aria-label="Locked page music controls">
+		<button class="music-toggle" id="lock-music-toggle" type="button" aria-label="Play locked page music" aria-pressed="false" title="Play locked page music">
+			<svg class="play-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M6 3.5v13l10-6.5z" /></svg>
+			<svg class="pause-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 4h3.5v12H5zm6.5 0H15v12h-3.5z" /></svg>
+		</button>
+		<label class="visually-hidden" for="lock-music-volume">Locked page music volume</label>
+		<input class="music-volume" id="lock-music-volume" type="range" min="0" max="100" value="30" aria-label="Locked page music volume">
+	</div>
+	<audio id="lock-music" src="./my_voice.m4a" preload="metadata" loop></audio>
+
+	<script>
+		// Change this value to the password you want to use.
+		const PAGE_PASSWORD = "zanark";
+
+		const form = document.querySelector("#password-form");
+		const input = document.querySelector("#password");
+		const message = document.querySelector("#message");
+		const gate = document.querySelector("#password-gate");
+		const privateContent = document.querySelector("#private-content");
+		const pageStatus = document.querySelector("#page-status");
+		const thoughtHotspot = document.querySelector("#thought-hotspot");
+		const thoughtTrigger = document.querySelector("#thought-trigger");
+		const thoughtBubble = document.querySelector("#thought-bubble");
+		const thoughtClose = document.querySelector("#thought-close");
+		const replyHotspot = document.querySelector("#reply-hotspot");
+		const replyTrigger = document.querySelector("#reply-trigger");
+		const replyBubble = document.querySelector("#reply-bubble");
+		const replyClose = document.querySelector("#reply-close");
+		const musicToggle = document.querySelector("#music-toggle");
+		const musicVolume = document.querySelector("#music-volume");
+		const musicStatus = document.querySelector("#music-status");
+		const customMusic = document.querySelector("#custom-music");
+		const lockMusicToggle = document.querySelector("#lock-music-toggle");
+		const lockMusicVolume = document.querySelector("#lock-music-volume");
+		const lockMusicStatus = document.querySelector("#lock-music-status");
+		const lockMusic = document.querySelector("#lock-music");
+		document.querySelectorAll(".music-player").forEach((player) => {
+			player.addEventListener("pointerenter", () => {
+				player.style.opacity = "1";
+			});
+			player.addEventListener("pointerleave", () => {
+				if (!player.contains(document.activeElement)) {
+					player.style.removeProperty("opacity");
+				}
+			});
+			player.addEventListener("focusin", () => {
+				player.style.opacity = "1";
+			});
+			player.addEventListener("focusout", () => {
+				window.setTimeout(() => {
+					if (!player.contains(document.activeElement) && !player.matches(":hover")) {
+						player.style.removeProperty("opacity");
+					}
+				}, 0);
+			});
+		});
+		customMusic.volume = Number(musicVolume.value) / 100;
+		lockMusic.volume = Number(lockMusicVolume.value) / 100;
+		let thoughtHideTimer;
+
+		function showThoughtBubble() {
+			window.clearTimeout(thoughtHideTimer);
+			thoughtHotspot.classList.add("is-hovered");
+		}
+
+		function scheduleThoughtBubbleHide() {
+			window.clearTimeout(thoughtHideTimer);
+			thoughtHideTimer = window.setTimeout(() => {
+				if (!thoughtHotspot.classList.contains("is-open") && !thoughtHotspot.contains(document.activeElement)) {
+					thoughtHotspot.classList.remove("is-hovered");
+				}
+			}, 500);
+		}
+
+		thoughtTrigger.addEventListener("pointerenter", showThoughtBubble);
+		thoughtTrigger.addEventListener("pointerleave", scheduleThoughtBubbleHide);
+		thoughtTrigger.addEventListener("focus", showThoughtBubble);
+		thoughtTrigger.addEventListener("blur", scheduleThoughtBubbleHide);
+		thoughtBubble.addEventListener("pointerenter", showThoughtBubble);
+		thoughtBubble.addEventListener("pointerleave", scheduleThoughtBubbleHide);
+		thoughtTrigger.addEventListener("click", () => {
+			const isOpen = thoughtHotspot.classList.toggle("is-open");
+			thoughtTrigger.setAttribute("aria-expanded", String(isOpen));
+			if (isOpen) {
+				showThoughtBubble();
+			} else {
+				thoughtHotspot.classList.remove("is-hovered");
+			}
+		});
+		thoughtTrigger.addEventListener("keydown", (event) => {
+			if (event.key === "Escape") {
+				thoughtHotspot.classList.remove("is-open", "is-hovered");
+				thoughtTrigger.setAttribute("aria-expanded", "false");
+			}
+		});
+		thoughtClose.addEventListener("click", () => {
+			thoughtHotspot.classList.remove("is-open", "is-hovered");
+			thoughtTrigger.setAttribute("aria-expanded", "false");
+			document.querySelector("#lock-page").focus();
+		});
+
+		let replyHideTimer;
+
+		function showReplyBubble() {
+			window.clearTimeout(replyHideTimer);
+			replyHotspot.classList.add("is-hovered");
+		}
+
+		function scheduleReplyBubbleHide() {
+			window.clearTimeout(replyHideTimer);
+			replyHideTimer = window.setTimeout(() => {
+				if (!replyHotspot.classList.contains("is-open") && !replyHotspot.contains(document.activeElement)) {
+					replyHotspot.classList.remove("is-hovered");
+				}
+			}, 500);
+		}
+
+		replyTrigger.addEventListener("pointerenter", showReplyBubble);
+		replyTrigger.addEventListener("pointerleave", scheduleReplyBubbleHide);
+		replyTrigger.addEventListener("focus", showReplyBubble);
+		replyTrigger.addEventListener("blur", scheduleReplyBubbleHide);
+		replyBubble.addEventListener("pointerenter", showReplyBubble);
+		replyBubble.addEventListener("pointerleave", scheduleReplyBubbleHide);
+		replyTrigger.addEventListener("click", () => {
+			const isOpen = replyHotspot.classList.toggle("is-open");
+			replyTrigger.setAttribute("aria-expanded", String(isOpen));
+			if (isOpen) {
+				showReplyBubble();
+			} else {
+				replyHotspot.classList.remove("is-hovered");
+			}
+		});
+		replyTrigger.addEventListener("keydown", (event) => {
+			if (event.key === "Escape") {
+				replyHotspot.classList.remove("is-open", "is-hovered");
+				replyTrigger.setAttribute("aria-expanded", "false");
+			}
+		});
+		replyClose.addEventListener("click", () => {
+			replyHotspot.classList.remove("is-open", "is-hovered");
+			replyTrigger.setAttribute("aria-expanded", "false");
+			document.querySelector("#lock-page").focus();
+		});
+
+		function setMusicPlaying(playing) {
+			musicToggle.setAttribute("aria-pressed", String(playing));
+			musicToggle.setAttribute("aria-label", playing ? "Pause background music" : "Play background music");
+			musicToggle.title = playing ? "Pause background music" : "Play background music";
+		}
+
+		async function toggleMusic() {
+			if (!customMusic.paused) {
+				customMusic.pause();
+				return;
+			}
+
+			try {
+				await customMusic.play();
+			} catch {
+				musicStatus.textContent = "Could not start the BGM; press play to retry";
+			}
+		}
+
+		musicToggle.addEventListener("click", toggleMusic);
+		musicVolume.addEventListener("input", () => {
+			customMusic.volume = Number(musicVolume.value) / 100;
+		});
+		customMusic.addEventListener("play", () => setMusicPlaying(true));
+		customMusic.addEventListener("pause", () => setMusicPlaying(false));
+		customMusic.addEventListener("error", () => {
+			musicStatus.textContent = "....";
+		});
+
+		async function toggleLockMusic() {
+			if (!lockMusic.paused) {
+				lockMusic.pause();
+				return;
+			}
+
+			try {
+				await lockMusic.play();
+			} catch {
+				lockMusicStatus.textContent = "";
+			}
+		}
+
+		function setLockMusicPlaying(playing) {
+			lockMusicToggle.setAttribute("aria-pressed", String(playing));
+			lockMusicToggle.setAttribute("aria-label", playing ? "Pause locked page music" : "Play locked page music");
+			lockMusicToggle.title = playing ? "Pause locked page music" : "Play locked page music";
+			lockMusicStatus.textContent = playing ? "playing" : "paused";
+		}
+
+		lockMusicToggle.addEventListener("click", toggleLockMusic);
+		lockMusicVolume.addEventListener("input", () => {
+			lockMusic.volume = Number(lockMusicVolume.value) / 100;
+		});
+		lockMusic.addEventListener("play", () => setLockMusicPlaying(true));
+		lockMusic.addEventListener("pause", () => setLockMusicPlaying(false));
+		lockMusic.addEventListener("error", () => {
+			lockMusicStatus.textContent = "....";
+		});
+
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+
+			if (input.value === PAGE_PASSWORD) {
+				gate.classList.add("is-hidden");
+				privateContent.classList.add("is-visible");
+				document.body.classList.add("is-unlocked");
+				pageStatus.textContent = "Unlocked";
+				pageStatus.classList.add("is-unlocked");
+				lockMusic.pause();
+				toggleMusic();
+				privateContent.focus();
+				return;
+			}
+
+			message.textContent = "Ayyy! You’re not the OP! Shoo Shoo :P";
+			input.value = "";
+			input.focus();
+		});
+
+		document.querySelector("#lock-page").addEventListener("click", () => {
+			privateContent.classList.remove("is-visible");
+			gate.classList.remove("is-hidden");
+			document.body.classList.remove("is-unlocked");
+			customMusic.pause();
+			input.value = "";
+			message.textContent = "";
+			pageStatus.textContent = "Restricted to just OP";
+			pageStatus.classList.remove("is-unlocked");
+			input.focus();
+		});
+	</script>
+</body>
+</html>
